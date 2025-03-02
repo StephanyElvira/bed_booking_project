@@ -23,7 +23,6 @@ const createProperty = async (
     hostId,
     rating,
   };
-  // need to add check if user already exists
 
   const property = await prisma.property.create({
     data: newProperty,

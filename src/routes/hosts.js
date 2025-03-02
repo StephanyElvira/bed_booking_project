@@ -26,25 +26,29 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", auth, async (req, res, next) => {
-  const {
-    username,
-    password,
-    name,
-    email,
-    phoneNumber,
-    profilePicture,
-    aboutMe,
-  } = req.body;
-  const newHost = await createHost(
-    username,
-    password,
-    name,
-    email,
-    phoneNumber,
-    profilePicture,
-    aboutMe
-  );
-  res.status(201).json(newHost);
+  try {
+    const {
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture,
+      aboutMe,
+    } = req.body;
+    const newHost = await createHost(
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture,
+      aboutMe
+    );
+    res.status(201).json(newHost);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.put("/:id", auth, async (req, res, next) => {

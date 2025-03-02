@@ -16,7 +16,7 @@ model User {
   email          String    @unique
   phoneNumber    String
   profilePicture String
-  bookings       Booking[]
+  bookings       Booking[] @relation("BookingToUser") // Cascade delete
   reviews        Review[]
 }
 
@@ -66,8 +66,8 @@ model Booking {
   numberOfGuests Int
   totalPrice     Int
   bookingStatus  String
-  user           User     @relation(fields: [userId], references: [id])
-  property       Property @relation(fields: [propertyId], references: [id])
+  user           User     @relation("BookingToUser", fields: [userId], references: [id], onDelete: Cascade)
+  property       Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 
   @@index([propertyId])
   @@index([userId])
@@ -79,7 +79,7 @@ model Review {
   propertyId String
   rating     Int
   comment    String
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   property   Property @relation(fields: [propertyId], references: [id])
 
   @@index([userId])

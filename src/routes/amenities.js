@@ -59,12 +59,12 @@ router.delete("/:id", auth, async (req, res, next) => {
 
     if (amenity) {
       res.status(200).send({
-        message: `User with id ${id} successfully deleted`,
+        message: `Amenity with id ${id} successfully deleted`,
         amenity,
       });
     } else {
       res.status(404).json({
-        message: `User with id ${id} not found`,
+        message: `Amenity with id ${id} not found`,
       });
     }
   } catch (error) {

@@ -17,7 +17,6 @@ const createUser = async (
     phoneNumber,
     profilePicture,
   };
-  // need to add check if user already exists
 
   const user = await prisma.user.create({
     data: newUser,

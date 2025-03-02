@@ -19,7 +19,6 @@ const createHost = async (
     profilePicture,
     aboutMe,
   };
-  // need to add check if user already exists
 
   const host = await prisma.host.create({
     data: newHost,

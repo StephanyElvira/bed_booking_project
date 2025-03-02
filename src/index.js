@@ -45,6 +45,10 @@ app.use(function onError(err, req, res, next) {
 });
 
 app.use(errorHandler);
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Log the error details
+  res.status(500).send({ message: "Something went wrong!" }); // Send a generic error message to the client
+});
 
 app.listen(3000, () => {
   console.log("Server is listening on port 3000");
