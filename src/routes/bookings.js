@@ -27,25 +27,29 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", auth, async (req, res, next) => {
-  const {
-    userId,
-    propertyId,
-    checkinDate,
-    checkoutDate,
-    numberOfGuests,
-    totalPrice,
-    bookingStatus,
-  } = req.body;
-  const newBooking = await createBooking(
-    userId,
-    propertyId,
-    checkinDate,
-    checkoutDate,
-    numberOfGuests,
-    totalPrice,
-    bookingStatus
-  );
-  res.status(201).json(newBooking);
+  try {
+    const {
+      userId,
+      propertyId,
+      checkinDate,
+      checkoutDate,
+      numberOfGuests,
+      totalPrice,
+      bookingStatus,
+    } = req.body;
+    const newBooking = await createBooking(
+      userId,
+      propertyId,
+      checkinDate,
+      checkoutDate,
+      numberOfGuests,
+      totalPrice,
+      bookingStatus
+    );
+    res.status(201).json(newBooking);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 router.put("/:id", auth, async (req, res, next) => {

@@ -47,7 +47,7 @@ router.post("/", auth, async (req, res, next) => {
     );
     res.status(201).json(newHost);
   } catch (error) {
-    next(error);
+    res.status(400).json({ message: error.message });
   }
 });
 
@@ -93,17 +93,17 @@ router.delete("/:id", auth, async (req, res, next) => {
     const { id } = req.params;
     const host = await deleteHostById(id);
 
-    if (host) {
-      res.status(200).send({
-        message: `Host with id ${id} successfully deleted`,
+    res.status(200).send({
+      message: `Host with id ${id} successfully deleted`,
+    });
+  } catch (error) {
+    if (error.message.includes("not found")) {
+      res.status(404).json({
+        message: error.message,
       });
     } else {
-      res.status(404).json({
-        message: `Host with id ${id} not found`,
-      });
+      next(error);
     }
-  } catch (error) {
-    next(error);
   }
 });
 

@@ -4,12 +4,17 @@ import { PrismaClient } from "@prisma/client";
 const login = async (username, password) => {
   const secretKey = process.env.AUTH_SECRET_KEY || "my-secret-key";
   const prisma = new PrismaClient();
-  const user = prisma.user.findFirst({
+
+  const user = await prisma.user.findFirst({
     where: { username, password },
   });
 
   if (!user) {
     return null;
+  }
+
+  if (!username || !password) {
+    throw new Error("All fields required");
   }
 
   const token = jwt.sign({ userId: user.id }, secretKey);

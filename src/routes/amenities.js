@@ -27,9 +27,13 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", auth, async (req, res, next) => {
-  const { name } = req.body;
-  const newAmenity = await createAmenity(name);
-  res.status(201).json({ message: `Amenity ${name} sucesfully created` });
+  try {
+    const { name } = req.body;
+    const newAmenity = await createAmenity(name);
+    res.status(201).json({ message: `Amenity ${name} sucesfully created` });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 router.put("/:id", auth, async (req, res, next) => {

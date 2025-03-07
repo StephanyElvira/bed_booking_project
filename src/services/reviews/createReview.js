@@ -9,6 +9,10 @@ const createReview = async (userId, propertyId, rating, comment) => {
     comment,
   };
 
+  if (!userId || !propertyId || !rating || !comment) {
+    throw new Error("All fields are required");
+  }
+
   const review = await prisma.review.create({
     data: newReview,
   });

@@ -26,9 +26,13 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", auth, async (req, res, next) => {
-  const { userId, propertyId, rating, comment } = req.body;
-  const newReview = await createReview(userId, propertyId, rating, comment);
-  res.status(201).json(newReview);
+  try {
+    const { userId, propertyId, rating, comment } = req.body;
+    const newReview = await createReview(userId, propertyId, rating, comment);
+    res.status(201).json(newReview);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 router.put("/:id", auth, async (req, res, next) => {

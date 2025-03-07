@@ -10,6 +10,18 @@ const createHost = async (
   aboutMe
 ) => {
   const prisma = new PrismaClient();
+
+  if (
+    !username ||
+    !password ||
+    !name ||
+    !email ||
+    !phoneNumber ||
+    !profilePicture ||
+    !aboutMe
+  ) {
+    throw new Error("All fields are required");
+  }
   const newHost = {
     username,
     password,

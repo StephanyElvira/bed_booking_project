@@ -11,7 +11,8 @@ import auth from "../middleware/auth.js";
 const router = Router();
 
 router.get("/", async (req, res) => {
-  const properties = await getProperties();
+  const { location, pricePerNight, amenities } = req.query;
+  const properties = await getProperties(location, pricePerNight, amenities);
   res.status(200).json(properties);
 });
 
@@ -26,29 +27,33 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", auth, async (req, res, next) => {
-  const {
-    title,
-    description,
-    location,
-    pricePerNight,
-    bedroomCount,
-    bathRoomCount,
-    maxGuestCount,
-    hostId,
-    rating,
-  } = req.body;
-  const newProperty = await createProperty(
-    title,
-    description,
-    location,
-    pricePerNight,
-    bedroomCount,
-    bathRoomCount,
-    maxGuestCount,
-    hostId,
-    rating
-  );
-  res.status(201).json(newProperty);
+  try {
+    const {
+      title,
+      description,
+      location,
+      pricePerNight,
+      bedroomCount,
+      bathRoomCount,
+      maxGuestCount,
+      hostId,
+      rating,
+    } = req.body;
+    const newProperty = await createProperty(
+      title,
+      description,
+      location,
+      pricePerNight,
+      bedroomCount,
+      bathRoomCount,
+      maxGuestCount,
+      hostId,
+      rating
+    );
+    res.status(201).json(newProperty);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 router.put("/:id", auth, async (req, res, next) => {

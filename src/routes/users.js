@@ -48,13 +48,7 @@ router.post("/", auth, async (req, res, next) => {
     );
     res.status(201).json(newUser);
   } catch (error) {
-    if (error.code === "P2002") {
-      return res.status(400).json({
-        message:
-          "Username or email already exists. Please use a different one.",
-      });
-    }
-    next(error);
+    res.status(400).json({ message: error.message });
   }
 });
 

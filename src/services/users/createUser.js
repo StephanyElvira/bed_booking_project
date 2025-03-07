@@ -9,6 +9,18 @@ const createUser = async (
   profilePicture
 ) => {
   const prisma = new PrismaClient();
+
+  if (
+    !username ||
+    !password ||
+    !name ||
+    !email ||
+    !phoneNumber ||
+    !profilePicture
+  ) {
+    throw new Error("All fields are required");
+  }
+
   const newUser = {
     username,
     password,

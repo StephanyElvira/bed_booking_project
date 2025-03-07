@@ -5,6 +5,10 @@ const createAmenity = async (name) => {
 
   const newAmenity = { name };
 
+  if (!name) {
+    throw new Error("All fields are required");
+  }
+
   const amenity = await prisma.amenity.create({ data: newAmenity });
 
   return amenity;

@@ -12,6 +12,21 @@ const createProperty = async (
   rating
 ) => {
   const prisma = new PrismaClient();
+
+  if (
+    !title ||
+    !description ||
+    !location ||
+    !pricePerNight ||
+    !bedroomCount ||
+    !bathRoomCount ||
+    !maxGuestCount ||
+    !hostId ||
+    !rating
+  ) {
+    throw new Error("All fields are required");
+  }
+
   const newProperty = {
     title,
     description,
